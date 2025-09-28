@@ -113,6 +113,9 @@ var SnailBait = function () {
    this.RUNNER_CELLS_WIDTH = 50; // pixels
    this.RUNNER_CELLS_HEIGHT = 54;
 
+   this.SCRUFFY_CELLS_WIDTH = 51;
+   this.SCRUFFY_CELLS_HEIGHT = 60;
+
    this.BAT_CELLS_HEIGHT = 34; // Bat cell width varies; not constant 
 
    this.BEE_CELLS_HEIGHT = 50;
@@ -297,6 +300,52 @@ var SnailBait = function () {
       { left: 425, top: 305, 
          width: 35, height: this.RUNNER_CELLS_HEIGHT },
    ],
+
+   //New player cells (scruffy)
+   this.scruffyCellsRight = [
+      { left: 480, top: 385,
+         width: 37, height: this.SCRUFFY_CELLS_HEIGHT },
+
+      { left: 539, top: 385,
+         width: 32, height: this.SCRUFFY_CELLS_HEIGHT },
+
+      { left: 574, top: 385,
+         width: 51, height: this.SCRUFFY_CELLS_HEIGHT },
+
+      { left: 632, top: 385,
+         width: 45, height: this.SCRUFFY_CELLS_HEIGHT },
+         
+      { left: 688, top: 385,
+         width: 39, height: this.SCRUFFY_CELLS_HEIGHT },
+
+      { left: 738, top: 385,
+         width: 41, height: this.SCRUFFY_CELLS_HEIGHT },
+
+      { left: 787, top: 385,
+         width: 48, height: this.SCRUFFY_CELLS_HEIGHT },
+
+      { left: 844, top: 385,
+         width: 46, height: this.SCRUFFY_CELLS_HEIGHT },
+   ]
+   this.scruffyCellsLeft = [
+      //frames done: 1 2 3 4 5 6 
+      { left: 854, top: 320,
+         width: 36, height: this.SCRUFFY_CELLS_HEIGHT },
+      { left: 799, top: 320,
+         width: 42, height: this.SCRUFFY_CELLS_HEIGHT },
+      { left: 745, top: 320,
+         width: 51, height: this.SCRUFFY_CELLS_HEIGHT },
+      { left: 693, top: 320,
+         width: 45, height: this.SCRUFFY_CELLS_HEIGHT },
+      { left: 643, top: 320,
+         width: 40, height: this.SCRUFFY_CELLS_HEIGHT },
+      { left: 591, top: 320,
+         width: 41, height: this.SCRUFFY_CELLS_HEIGHT },
+      { left: 535, top: 320,
+         width: 51, height: this.SCRUFFY_CELLS_HEIGHT },
+      { left: 480, top: 320,
+         width: 46, height: this.SCRUFFY_CELLS_HEIGHT },
+   ]
 
    this.sapphireCells = [
       { left: 185,   top: 138, width: this.SAPPHIRE_CELLS_WIDTH,
@@ -840,7 +889,7 @@ SnailBait.prototype = {
 
        this.runner = new Sprite('runner',
                         new SpriteSheetArtist(this.spritesheet,
-                                              this.runnerCellsRight)); 
+                                              this.scruffyCellsRight)); 
 
        this.runner.track = STARTING_RUNNER_TRACK;
        this.runner.left = RUNNER_LEFT;
@@ -1164,7 +1213,8 @@ SnailBait.prototype = {
    },
 
    initializeImages: function () {
-      this.spritesheet.src = 'images/spritesheet.png';
+      //Call to sprite sheet png.
+      this.spritesheet.src = 'images/spritesheet2.png';
       this.runnerAnimatedGIFElement.src = 'images/snail.gif';
 
       this.spritesheet.onload = function (e) {
