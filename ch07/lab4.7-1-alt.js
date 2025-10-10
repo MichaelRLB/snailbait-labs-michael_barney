@@ -643,8 +643,19 @@ var SnailBait = function () {
    // Pacing on platforms...............................................
 
    this.runBehavior = {
-      // Edit runBehavior to not animate unless on a platform.
       lastAdvanceTime: 0,
+      runnerIsOnAPlatform: function(sprite, context){
+         //console.log("Context:" + JSON.stringify(snailBait.backgroundOffset));
+         //runner is undefined - how to fix?
+         for(var i = 0; i < snailBait.platformData.length; ++i) {
+            var pd = snailBait.platformData[i];
+            console.log(JSON.stringify(runner));
+            if(pd.track != 1){
+               continue;
+            }
+         }
+         return false;
+      },
       
       execute: function (sprite, 
                          now, 
@@ -654,7 +665,11 @@ var SnailBait = function () {
          if (sprite.runAnimationRate === 0) {
             return;
          }
-         
+         //write runnerIsOnAPlatform
+         if(this.runnerIsOnAPlatform(sprite) == false){
+            //console.log('output is false');
+            return;
+         }
          if (this.lastAdvanceTime === 0) {  // skip first time
             this.lastAdvanceTime = now;
          }
@@ -719,7 +734,6 @@ var SnailBait = function () {
 
          if ( ! bomb.visible && 
               sprite.artist.cellIndex === MOUTH_OPEN_CELL) {
-            //wait one second, then shoot (how do I tell the game to do this?)
             bomb.left = sprite.left;
             bomb.visible = true;
          }
@@ -1068,34 +1082,12 @@ SnailBait.prototype = {
 
    drawSprites: function() {
       var sprite;
-      var RUNNER_ON_TRACK;
-
-      this.RUNNER_ON_TRACK = false;
 
       for (var i=0; i < this.sprites.length; ++i) {
          sprite = this.sprites[i];
 
          if (sprite.visible && this.isSpriteInView(sprite)) {
             this.context.translate(-sprite.hOffset, 0);
-            if(sprite.type === 'platform'){
-               // Cycle through all platforms and see if any platform straddles the left edge of the runner - the value 50
-               //if it does, set RUNNER_ON_TRACK to 'true'.
-               //include console output to see if RUNNER_ON_TRACK property works.
-               console.log('You are now touching a platform')
-               RUNNER_ON_TRACK = true;
-            }
-            if(sprite.type === 'Runner'){
-               // Now, for the runner, when false set the runner.runAnimationRate to 0, 
-               // RUNNER_ON_TRACK property isn't being detected... is this because it can't tell what the sprite is?
-               if(RUNNER_ON_TRACK === false){
-                  console.log('RUNNER_ON_TRACK false')
-                  runner.runAnimationRate = 0;
-               }
-               else {
-                  console.log('RUNNER_ON_TRACK is true')
-                  runner.runAnimationRate = snailBait.RUN_ANIMATION_RATE;
-               }
-            }
             sprite.draw(this.context);
             this.context.translate(sprite.hOffset, 0);
          }
@@ -1109,7 +1101,7 @@ SnailBait.prototype = {
       this.drawBackground();
       this.updateSprites(now);
       this.drawSprites();
-      /* This code has been rewritten elsewhere.
+      /*
       this.drawRunner();
       this.drawPlatforms();
       */
