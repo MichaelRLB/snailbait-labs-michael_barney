@@ -644,18 +644,6 @@ var SnailBait = function () {
 
    this.runBehavior = {
       lastAdvanceTime: 0,
-      runnerIsOnAPlatform: function(sprite, context){
-         //console.log("Context:" + JSON.stringify(snailBait.backgroundOffset));
-         //runner is undefined - how to fix? write as ""
-         for(var i = 0; i < snailBait.platformData.length; ++i) {
-            var pd = snailBait.platformData[i];
-            console.log(JSON.stringify(snailBait.runner.left));
-            if(pd.track != 1){
-               continue;
-            }
-         }
-         return false;
-      },
       
       execute: function (sprite, 
                          now, 
@@ -665,11 +653,7 @@ var SnailBait = function () {
          if (sprite.runAnimationRate === 0) {
             return;
          }
-         //write runnerIsOnAPlatform
-         if(this.runnerIsOnAPlatform(sprite) == false){
-            //console.log('output is false');
-            return;
-         }
+         
          if (this.lastAdvanceTime === 0) {  // skip first time
             this.lastAdvanceTime = now;
          }
@@ -1023,7 +1007,7 @@ SnailBait.prototype = {
                             [ this.paceBehavior,
                               this.snailShootBehavior,
                               new CycleBehavior(300,  // 300ms per image
-                                                1500) // 1.5 seconds interlude 
+                                                1000) // 1 second interlude 
                             ]);
 
          snail.width  = this.SNAIL_CELLS_WIDTH;

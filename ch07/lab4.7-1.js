@@ -1072,6 +1072,8 @@ SnailBait.prototype = {
 
       this.RUNNER_ON_TRACK = false;
 
+      //var playerPos = snailBait.backgroundOffset + snailBait.runner.left;
+
       for (var i=0; i < this.sprites.length; ++i) {
          sprite = this.sprites[i];
 
@@ -1079,6 +1081,13 @@ SnailBait.prototype = {
             this.context.translate(-sprite.hOffset, 0);
             if(sprite.type === 'platform'){
                // Cycle through all platforms and see if any platform straddles the left edge of the runner - the value 50
+               for(var i = 0; i < snailBait.platformData.length; ++i){
+                  var pd = snailBait.platformData[i];
+                  console.log(JSON.stringify(snailBait.platformData));
+                  if(pd.track != 1){
+                     continue;
+                  }
+               }
                //if it does, set RUNNER_ON_TRACK to 'true'.
                //include console output to see if RUNNER_ON_TRACK property works.
                console.log('You are now touching a platform')

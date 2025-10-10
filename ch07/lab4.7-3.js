@@ -118,6 +118,9 @@ var SnailBait = function () {
    this.RUNNER_CELLS_WIDTH = 50; // pixels
    this.RUNNER_CELLS_HEIGHT = 54;
 
+   this.SCRUFFY_CELLS_WIDTH = 51;
+   this.SCRUFFY_CELLS_HEIGHT = 60;
+
    this.BAT_CELLS_HEIGHT = 34; // Bat cell width varies; not constant 
 
    this.BEE_CELLS_HEIGHT = 50;
@@ -302,6 +305,52 @@ var SnailBait = function () {
       { left: 425, top: 305, 
          width: 35, height: this.RUNNER_CELLS_HEIGHT },
    ],
+
+      //New player cells (scruffy)
+   this.scruffyCellsRight = [
+      { left: 480, top: 385,
+         width: 37, height: this.SCRUFFY_CELLS_HEIGHT },
+
+      { left: 539, top: 385,
+         width: 32, height: this.SCRUFFY_CELLS_HEIGHT },
+
+      { left: 574, top: 385,
+         width: 51, height: this.SCRUFFY_CELLS_HEIGHT },
+
+      { left: 632, top: 385,
+         width: 45, height: this.SCRUFFY_CELLS_HEIGHT },
+         
+      { left: 688, top: 385,
+         width: 39, height: this.SCRUFFY_CELLS_HEIGHT },
+
+      { left: 738, top: 385,
+         width: 41, height: this.SCRUFFY_CELLS_HEIGHT },
+
+      { left: 787, top: 385,
+         width: 48, height: this.SCRUFFY_CELLS_HEIGHT },
+
+      { left: 844, top: 385,
+         width: 46, height: this.SCRUFFY_CELLS_HEIGHT },
+   ]
+   this.scruffyCellsLeft = [
+      //frames done: 1 2 3 4 5 6 
+      { left: 854, top: 320,
+         width: 36, height: this.SCRUFFY_CELLS_HEIGHT },
+      { left: 799, top: 320,
+         width: 42, height: this.SCRUFFY_CELLS_HEIGHT },
+      { left: 745, top: 320,
+         width: 51, height: this.SCRUFFY_CELLS_HEIGHT },
+      { left: 693, top: 320,
+         width: 45, height: this.SCRUFFY_CELLS_HEIGHT },
+      { left: 643, top: 320,
+         width: 40, height: this.SCRUFFY_CELLS_HEIGHT },
+      { left: 591, top: 320,
+         width: 41, height: this.SCRUFFY_CELLS_HEIGHT },
+      { left: 535, top: 320,
+         width: 51, height: this.SCRUFFY_CELLS_HEIGHT },
+      { left: 480, top: 320,
+         width: 46, height: this.SCRUFFY_CELLS_HEIGHT },
+   ]
 
    this.rubyCells = [
       { left: 185,   top: 138, width: this.SAPPHIRE_CELLS_WIDTH,
@@ -644,18 +693,6 @@ var SnailBait = function () {
 
    this.runBehavior = {
       lastAdvanceTime: 0,
-      runnerIsOnAPlatform: function(sprite, context){
-         //console.log("Context:" + JSON.stringify(snailBait.backgroundOffset));
-         //runner is undefined - how to fix? write as ""
-         for(var i = 0; i < snailBait.platformData.length; ++i) {
-            var pd = snailBait.platformData[i];
-            console.log(JSON.stringify(snailBait.runner.left));
-            if(pd.track != 1){
-               continue;
-            }
-         }
-         return false;
-      },
       
       execute: function (sprite, 
                          now, 
@@ -665,11 +702,7 @@ var SnailBait = function () {
          if (sprite.runAnimationRate === 0) {
             return;
          }
-         //write runnerIsOnAPlatform
-         if(this.runnerIsOnAPlatform(sprite) == false){
-            //console.log('output is false');
-            return;
-         }
+         
          if (this.lastAdvanceTime === 0) {  // skip first time
             this.lastAdvanceTime = now;
          }
@@ -978,7 +1011,7 @@ SnailBait.prototype = {
 
        this.runner = new Sprite('runner',
                         new SpriteSheetArtist(this.spritesheet,
-                                              this.runnerCellsRight),
+                                              this.scruffyCellsRight),
                         [ this.runBehavior ]); 
 
        this.runner.runAnimationRate = STARTING_RUN_ANIMATION_RATE;
@@ -1233,13 +1266,13 @@ SnailBait.prototype = {
    turnLeft: function () {
       this.bgVelocity = -this.BACKGROUND_VELOCITY;
       this.runner.runAnimationRate = this.RUN_ANIMATION_RATE;
-      this.runner.artist.cells = this.runnerCellsLeft;
+      this.runner.artist.cells = this.scruffyCellsLeft;
    },
 
    turnRight: function () {
       this.bgVelocity = this.BACKGROUND_VELOCITY;
       this.runner.runAnimationRate = this.RUN_ANIMATION_RATE;
-      this.runner.artist.cells = this.runnerCellsRight;
+      this.runner.artist.cells = this.scruffyCellsRight;
    },
 
    fadeInElements: function () {
@@ -1346,7 +1379,7 @@ SnailBait.prototype = {
    },
 
    initializeImages: function () {
-      this.spritesheet.src = '../images/spritesheet.png';
+      this.spritesheet.src = '../images/spritesheet2.png';
       this.runnerAnimatedGIFElement.src = '../images/snail.gif';
 
       this.spritesheet.onload = function (e) {
