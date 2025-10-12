@@ -646,12 +646,25 @@ var SnailBait = function () {
       lastAdvanceTime: 0,
       runnerIsOnAPlatform: function(sprite, context){
          //console.log("Context:" + JSON.stringify(snailBait.backgroundOffset));
-         //runner is undefined - how to fix? write as ""
+         //Write runner as "snailBait.runner"
+
          for(var i = 0; i < snailBait.platformData.length; ++i) {
             var pd = snailBait.platformData[i];
-            console.log(JSON.stringify(snailBait.runner.left));
+            var plat = snailBait.platforms[i];
+
             if(pd.track != 1){
                continue;
+            }
+            var playerPos = plat.hOffset + snailBait.backgroundOffset + snailBait.runner.left;            
+            var platLeft = snailBait.backgroundOffset + pd.left;
+            var platRight = snailBait.backgroundOffset + pd.left + pd.width;   
+            
+
+            //console.log('Runner = ' + JSON.stringify(playerPos) + '; Plat = (Left: ' + platLeft + ', Right: ' + platRight + ')');
+            //check if playerPos is greater than platLeft and less than platRight
+            if(playerPos >= platLeft && playerPos <= platRight) {
+               console.log('output is true')
+               return true;
             }
          }
          return false;
@@ -667,7 +680,7 @@ var SnailBait = function () {
          }
          //write runnerIsOnAPlatform
          if(this.runnerIsOnAPlatform(sprite) == false){
-            //console.log('output is false');
+            console.log('output is false');
             return;
          }
          if (this.lastAdvanceTime === 0) {  // skip first time
