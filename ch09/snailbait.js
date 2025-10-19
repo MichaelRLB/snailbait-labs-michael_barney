@@ -1611,16 +1611,16 @@ SnailBait.prototype = {
 window.onkeydown = function (e) {
    var key = e.keyCode;
 
-   if (key === 68 || key === 37) { // 'd' or left arrow
+   if (key === 65 || key === 37) { // 'a' or left arrow
       snailBait.turnLeft();
    }
-   else if (key === 75 || key === 39) { // 'k' or right arrow
+   else if (key === 68 || key === 39) { // 'k' or right arrow
       snailBait.turnRight();
    }
    else if (key === 80) { // 'p'
       snailBait.togglePaused();
    }
-   else if (key === 74) { // 'j'
+   else if (key === 74 || key === 32) { // 'j' or spacebar
       snailBait.runner.jump();
    }
 };
