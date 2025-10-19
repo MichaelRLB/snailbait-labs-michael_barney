@@ -1625,7 +1625,7 @@ SnailBait.prototype = {
       this.revealInitialToast();
 
       this.timeSystem.start();
-      this.setTimeRate(0.1);
+      this.setTimeRate(1.0);
 
       this.gameStarted = true;
 
