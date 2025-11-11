@@ -1187,6 +1187,7 @@ SnailBait.prototype = {
       };
 
       this.runner.stopFalling = function () {
+         console.log(this.velocityY);         
          this.falling = false;
          this.velocityY = 0;
          this.fallTimer.stop(

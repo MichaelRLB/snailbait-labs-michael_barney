@@ -913,6 +913,7 @@ var SnailBait = function () {
             sprite.initialVelocityY + snailBait.GRAVITY_FORCE *
             (sprite.fallTimer.getElapsedTime(now)/1000) *
             snailBait.PIXELS_PER_METER;
+
       },
 
       calculateVerticalDrop: function (sprite, now, 
@@ -933,6 +934,7 @@ var SnailBait = function () {
       moveDown: function (sprite, now, lastAnimationFrameTime) {
          var dropDistance;
 
+         console.log("initial vertical velocity = " + sprite.initialVelocityY)
          this.setSpriteVelocity(sprite, now);
 
          dropDistance = this.calculateVerticalDrop(
